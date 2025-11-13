@@ -365,3 +365,38 @@ ul {
         flex-basis: 100%;
     }
 }
+
+/* All products */
+
+.row-2 {
+    justify-content: space-between;
+    margin: 100px auto 50px;
+}
+select {
+    border: 1px solid #ff523b;
+    padding: 5px;
+}
+
+select:focus {
+    outline: none;
+}
+
+.page-btn {
+    margin: 0 auto 80px;
+}
+
+.page-btn span {
+    display: inline-block;
+    border: 1px solid #ff523b;
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 40px;
+}
+
+.page-btn span:hover {
+    background-color: #ff523b;
+    color: #fff;
+}
