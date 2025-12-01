@@ -79,7 +79,7 @@ p {
     background-color: #ff523b;
     color: white;
     padding: 9px 30px;
-    margin: 10px 0px;
+    margin: 9px 0px;
     border-radius: 30px;
     transition: background 0.5s;
 }
@@ -525,7 +525,7 @@ td img {
 .total-price table {
     border-top: 3px solid #ff523b;
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
 }
 
 .td:last-child {
@@ -534,4 +534,85 @@ td img {
 
 .th:last-child {
     text-align: right;
+}
+
+/* ----------account-page------ */
+
+.account-page {
+    padding: 50px 0;
+    background: linear-gradient(45deg, #fff, #ffd6d6);
+}
+
+.form-container {
+    background: #fff;
+    width: 300px;
+    height: 400px;
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+    margin: auto;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.form-container span {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #555;
+    cursor: pointer;
+    width: 100px;
+    display: inline-block;
+}
+
+.form-btn {
+    display: inline-block;
+}
+
+.form-container form {
+    max-width: 300px;
+    padding: 20px;
+    position: absolute;
+    top: 130px;
+    transition: transform 1s;
+}
+
+form input {
+    width: 100%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+}
+
+form .btn {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    /* margin: 10px; */
+}
+
+form .btn:focus {
+    outline: none;
+}
+
+#LoginForm {
+    left: -300px;
+}
+
+#Register {
+    left: 0;
+}
+
+form a {
+    font-size: 12px;
+}
+
+#Indicator {
+    width: 100px;
+    border: none;
+    background: #ff523b;
+    height: 3px;
+    margin-top: 8px;
+    transform: translate(150px);
+    transition: transform 1s;
 }

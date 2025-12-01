@@ -89,9 +89,21 @@
                             <span onclick="login()">Login</span>
                             <span onclick="register()">Register</span>
                             <hr id="Indicator" />
+
+                            <div class="div" id="result"></div>
                             <form id="LoginForm">
-                                <input type="text" placeholder="Username" />
-                                <input type="password" placeholder="Password" />
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Username"
+                                />
+                                <input
+                                    type="password"
+                                    id="pass"
+                                    name="password"
+                                    placeholder="Password"
+                                />
                                 <button type="submit" class="btn">Login</button>
                                 <a href=""> forget password</a>
                             </form>
@@ -184,6 +196,103 @@
                 LoginForm.style.transform = "translateX(300px)";
                 Indicator.style.transform = "translateX(50px)";
             }
+        </script>
+
+        <!-- ----------------------validation Using Promise-------------- -->
+
+        <!-- <script>
+            function submitform(us, psw) {
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        if (us === "admin" && psw === "123") {
+                            resolve("Login Succesfull");
+                        } else {
+                            reject("Invalid Username and Password");
+                        }
+                    }, 2000);
+                });
+            }
+
+            let form = document.getElementById("LoginForm");
+            var result = document.getElementById("result");
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                var us = document.getElementById("username").value;
+                var psw = document.getElementById("pass").value;
+
+                result.innerHTML = "Checking...";
+
+                submitform(us, psw)
+                    .then(function (message) {
+                        result.style.fontFamily = "Times New Roman";
+                        result.style.fontSize = "20px";
+                        result.style.color = "green";
+                        result.innerHTML = message;
+                    })
+                    .catch(function (error) {
+                        result.style.fontFamily = "Times New Roman";
+                        result.style.fontSize = "20px";
+                        result.style.color = "red";
+                        result.innerHTML = error;
+                    });
+            });
+        </script> -->
+
+        <!-- --------------LoginValidation----------------- -->
+
+        <script>
+            let form = document.getElementById("LoginForm");
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                var us = document.getElementById("username").value.trim();
+                var psw = document.getElementById("pass").value.trim();
+                var result = document.getElementById("result");
+
+                function submitform(us, psw) {
+                    var pattern = /^[A-Za-z0-9]+$/;
+                    var passPattern =
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,16}$/;
+                    result.innerHTML = "Checking...";
+                    result.style.color = "black";
+
+                    //Letter starts from Capital letters and
+                    if (us.length >= 6 && us.length <= 16) {
+                        if (pattern.test(us)) {
+                            if (!passPattern.test(psw)) {
+                                result.textContent =
+                                    "Password must be 8–16 chars, include uppercase, lowercase, number & special symbol";
+                                result.style.fontFamily = "Times New Roman";
+                                result.style.fontSize = "20px";
+                                result.style.color = "red";
+                                return;
+                            }
+                            setTimeout(function () {
+                                if (
+                                    us === "Vaishu" &&
+                                    psw === "Vaishnavi@123"
+                                ) {
+                                    result.textContent = "Login Sucessfull!!";
+                                    result.style.fontFamily = "Times New Roman";
+                                    result.style.fontSize = "20px";
+                                    result.style.color = "green";
+                                } else {
+                                    result.textContent = "Password Incorrect";
+                                    result.style.fontFamily = "Times New Roman";
+                                    result.style.fontSize = "20px";
+                                    result.style.color = "red";
+                                }
+                            }, 3000);
+                        }
+                    } else {
+                        result.textContent =
+                            "minimum 6 and maximum 16 letters only";
+                        result.style.color = "orange";
+                    }
+                }
+
+                submitform(us, psw);
+            });
         </script>
     </body>
 </html>
