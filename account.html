@@ -109,9 +109,21 @@
                             </form>
 
                             <form id="RegForm">
-                                <input type="text" placeholder="Username" />
-                                <input type="email" placeholder="Email" />
-                                <input type="password" placeholder="Password" />
+                                <input
+                                    type="text"
+                                    id="regUser"
+                                    placeholder="Username"
+                                />
+                                <input
+                                    type="email"
+                                    id="regEmail"
+                                    placeholder="Email"
+                                />
+                                <input
+                                    type="password"
+                                    id="regPass"
+                                    placeholder="Password"
+                                />
                                 <button type="submit" class="btn">
                                     Register
                                 </button>
@@ -268,16 +280,15 @@
                                 return;
                             }
                             setTimeout(function () {
-                                if (
-                                    us === "Vaishu" &&
-                                    psw === "Vaishnavi@123"
-                                ) {
-                                    result.textContent = "Login Sucessfull!!";
+                                let user = localStorage.getItem("username");
+                                let pass = localStorage.getItem("password");
+                                if (us === user && psw === pass) {
+                                    result.innerHTML = "Login Successfull!!";
                                     result.style.fontFamily = "Times New Roman";
                                     result.style.fontSize = "20px";
                                     result.style.color = "green";
                                 } else {
-                                    result.textContent = "Password Incorrect";
+                                    result.innerHTML = "Login Failed";
                                     result.style.fontFamily = "Times New Roman";
                                     result.style.fontSize = "20px";
                                     result.style.color = "red";
@@ -292,6 +303,60 @@
                 }
 
                 submitform(us, psw);
+            });
+
+            // -----------------------Register-----------
+            RegForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                let RegForm = document.getElementById("RegForm");
+
+                let regu = document.getElementById("regUser").value;
+                let rege = document.getElementById("regEmail").value;
+                let regp = document.getElementById("regPass").value;
+                let result = document.getElementById("result");
+
+                function regform(regu, rege, regp) {
+                    var pattern = /^[A-Za-z0-9]+$/;
+                    var passPattern =
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,16}$/;
+                    var emailPattern =
+                        /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+
+                    result.innerHTML = "Checking...";
+                    result.style.color = "black";
+
+                    if (regu.length >= 6 && regu.length <= 16) {
+                        if (pattern.test(regu)) {
+                            if (!emailPattern.test(rege)) {
+                                result.textContent = "Invalid Email Format";
+                                result.style.color = "red";
+                                return;
+                            }
+                            if (!passPattern.test(regp)) {
+                                result.textContent =
+                                    "Password must be 8–16 chars, include uppercase, lowercase, number & special symbol";
+                                result.style.fontFamily = "Times New Roman";
+                                result.style.fontSize = "20px";
+                                result.style.color = "red";
+
+                                return;
+                            }
+
+                            result.textContent = "Registration Successful!!";
+                            result.style.color = "green";
+                            result.style.margin = "20px";
+                            localStorage.setItem("username", regu);
+                            localStorage.setItem("email", rege);
+                            localStorage.setItem("password", regp);
+                        }
+                    } else {
+                        result.textContent =
+                            "minimum 6 and maximum 16 letters only";
+                        result.style.color = "orange";
+                    }
+                }
+
+                regform(regu, rege, regp);
             });
         </script>
     </body>
