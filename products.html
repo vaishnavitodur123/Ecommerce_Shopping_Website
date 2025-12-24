@@ -77,20 +77,19 @@
                 />
             </div>
         </div>
+        <div class="options">
+            <h2>All Products</h2>
+            <select id="filterSelect">
+                <option value="default">Default sorting</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+            </select>
+        </div>
 
         <div class="small-container">
-            <div class="row row-2">
-                <h2>All Products</h2>
-                <select>
-                    <option>Default shorting</option>
-                    <option>Short by price</option>
-                    <option>Short by Popularity</option>
-                    <option>Short by rating</option>
-                    <option>Short by sale</option>
-                </select>
-            </div>
+            <div class="row row-2"></div>
             <div class="row">
-                <div class="col-1">
+                <div class="col-1" data-price="4999">
                     <img src="images/product-1.jpg" />
                     <a href="/productDetails.html">
                         <h4>Red Printed T-shirt</h4></a
@@ -105,7 +104,7 @@
                     </div>
                     <p>4999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="3999">
                     <img src="images/product-2.jpg" />
                     <h4>black vivn shoes</h4>
                     <div class="rating">
@@ -117,7 +116,7 @@
                     </div>
                     <p>3999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="2999">
                     <img src="images/product-3.jpg" />
                     <h4>Gray Printed Pant</h4>
                     <div class="rating">
@@ -129,7 +128,7 @@
                     </div>
                     <p>2999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="4999">
                     <img src="images/product-4.jpg" />
                     <h4>Blue puma Shirt</h4>
                     <div class="rating">
@@ -143,7 +142,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-1">
+                <div class="col-1" data-price="5999">
                     <img src="images/product-8.jpg" />
                     <h4>black vivan watch</h4>
                     <div class="rating">
@@ -153,9 +152,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star-half-stroke"></i>
                     </div>
-                    <p>4999Rs</p>
+                    <p>5999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="5999">
                     <img src="images/product-5.jpg" />
                     <h4>Gray shoes</h4>
                     <div class="rating">
@@ -165,9 +164,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-regular fa-star"></i>
                     </div>
-                    <p>3999Rs</p>
+                    <p>5999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="1999">
                     <img src="images/product-6.jpg" />
                     <h4>black Printed T-shirt</h4>
                     <div class="rating">
@@ -177,9 +176,9 @@
                         <i class="fa-solid fa-star-half-stroke"></i>
                         <i class="fa-regular fa-star"></i>
                     </div>
-                    <p>2999Rs</p>
+                    <p>1999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="4999">
                     <img src="images/product-7.jpg" />
                     <h4>black & gray Shocks</h4>
                     <div class="rating">
@@ -194,7 +193,7 @@
             </div>
 
             <div class="row">
-                <div class="col-1">
+                <div class="col-1" data-price="6999">
                     <img src="images/product-9.jpg" />
                     <h4>Black vivan watch</h4>
                     <div class="rating">
@@ -204,9 +203,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star-half-stroke"></i>
                     </div>
-                    <p>4999Rs</p>
+                    <p>6999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="3999">
                     <img src="images/product-10.jpg" />
                     <h4>Black Redded Shoes</h4>
                     <div class="rating">
@@ -218,7 +217,7 @@
                     </div>
                     <p>3999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="2999">
                     <img src="images/product-11.jpg" />
                     <h4>Gray Shoes</h4>
                     <div class="rating">
@@ -230,7 +229,7 @@
                     </div>
                     <p>2999Rs</p>
                 </div>
-                <div class="col-1">
+                <div class="col-1" data-price="6999">
                     <img src="images/product-12.jpg" />
                     <h4>Black Pant</h4>
                     <div class="rating">
@@ -240,7 +239,7 @@
                         <i class="fa-solid fa-star-half-stroke"></i>
                         <i class="fa-regular fa-star"></i>
                     </div>
-                    <p>4999Rs</p>
+                    <p>6999Rs</p>
                 </div>
             </div>
 
@@ -307,6 +306,90 @@
                     MenuItems.style.maxHeight = "0px";
                 }
             }
+
+            // ================= SELECTORS =================
+            const productContainer = document.querySelector(".row");
+            const pageButtons = document.querySelectorAll(".page-btn span");
+            const filterSelect = document.getElementById("filterSelect");
+
+            const productsPerPage = 4;
+            let currentPage = 1;
+
+            // original products
+            const allProducts = Array.from(document.querySelectorAll(".col-1"));
+            let filteredProducts = [...allProducts];
+
+            // ================= PAGINATION =================
+            function showPage(page) {
+                currentPage = page;
+
+                // hide all
+                filteredProducts.forEach((product) => {
+                    product.style.display = "none";
+                });
+
+                const start = (page - 1) * productsPerPage;
+                const end = start + productsPerPage;
+
+                for (
+                    let i = start;
+                    i < end && i < filteredProducts.length;
+                    i++
+                ) {
+                    filteredProducts[i].style.display = ""; // keep flex/grid layout
+                }
+
+                // active page button
+                pageButtons.forEach((btn) => btn.classList.remove("active"));
+                if (pageButtons[page - 1]) {
+                    pageButtons[page - 1].classList.add("active");
+                }
+            }
+
+            // ================= PAGE BUTTON CLICK =================
+            pageButtons.forEach((btn, index) => {
+                btn.addEventListener("click", () => {
+                    if (btn.innerHTML === "→") {
+                        if (
+                            currentPage <
+                            Math.ceil(filteredProducts.length / productsPerPage)
+                        ) {
+                            showPage(currentPage + 1);
+                        }
+                    } else {
+                        showPage(index + 1);
+                    }
+                });
+            });
+
+            // ================= FILTER =================
+            filterSelect.addEventListener("change", () => {
+                const value = filterSelect.value;
+
+                if (value === "priceLow") {
+                    filteredProducts.sort(
+                        (a, b) => a.dataset.price - b.dataset.price
+                    );
+                } else if (value === "priceHigh") {
+                    filteredProducts.sort(
+                        (a, b) => b.dataset.price - a.dataset.price
+                    );
+                } else {
+                    filteredProducts = [...allProducts]; // reset
+                }
+
+                // re-append sorted products
+                filteredProducts.forEach((product) =>
+                    productContainer.appendChild(product)
+                );
+
+                // reset to first page
+                currentPage = 1;
+                showPage(1);
+            });
+
+            // ================= INITIAL LOAD =================
+            showPage(1);
         </script>
     </body>
 </html>
